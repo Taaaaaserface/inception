@@ -429,20 +429,20 @@ public class Trie<V>
         {
             private final Character _c;
             private final Node _n;
-            private final Iterator<Character> _i;
-            private boolean _nodeDone;
+            private final Iterator<Character> i;
+            private boolean nodeDone;
 
             public Frame(final Character c, final Node n)
             {
                 _c = c;
                 _n = n;
-                _i = n.children.keySet().iterator();
-                _nodeDone = _c == null || !_n.set;
+                i = n.children.keySet().iterator();
+                nodeDone = _c == null || !_n.set;
             }
 
             boolean hasNext()
             {
-                return _i.hasNext() || !_nodeDone;
+                return i.hasNext() || !nodeDone;
             }
 
             void step()
@@ -450,13 +450,13 @@ public class Trie<V>
                 sb.append(_c);
                 sb.setLength(_n.level);
 
-                if (!_nodeDone) {
+                if (!nodeDone) {
                     // Render the node self once
-                    _nodeDone = true;
+                    nodeDone = true;
                 }
                 else {
                     // Render the children
-                    final Character c = _i.next();
+                    final Character c = i.next();
                     final Frame f = new Frame(c, _n.children.get(c));
                     stack.add(f);
                     f.step();
